@@ -63,6 +63,21 @@ namespace Data_Hospital_Manager.Migrations
                     b.ToTable("Doctors");
                 });
 
+            modelBuilder.Entity("Data_Hospital_Manager.Entities.DoctorPatient", b =>
+                {
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DoctorId", "PatientId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("DoctorPatients");
+                });
+
             modelBuilder.Entity("Data_Hospital_Manager.Entities.Hospital", b =>
                 {
                     b.Property<int>("Id")
@@ -144,9 +159,38 @@ namespace Data_Hospital_Manager.Migrations
                     b.Navigation("Hospital");
                 });
 
+            modelBuilder.Entity("Data_Hospital_Manager.Entities.DoctorPatient", b =>
+                {
+                    b.HasOne("Data_Hospital_Manager.Entities.Doctor", "Doctor")
+                        .WithMany("DoctorPatients")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data_Hospital_Manager.Entities.Patient", "Patient")
+                        .WithMany("DoctorPatients")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Data_Hospital_Manager.Entities.Doctor", b =>
+                {
+                    b.Navigation("DoctorPatients");
+                });
+
             modelBuilder.Entity("Data_Hospital_Manager.Entities.Hospital", b =>
                 {
                     b.Navigation("Doctors");
+                });
+
+            modelBuilder.Entity("Data_Hospital_Manager.Entities.Patient", b =>
+                {
+                    b.Navigation("DoctorPatients");
                 });
 #pragma warning restore 612, 618
         }
