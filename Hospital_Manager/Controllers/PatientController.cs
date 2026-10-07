@@ -194,18 +194,6 @@ namespace Hospital_Manager.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         public async Task LoadDoctors(List<int> selectedDoctors = null)
         {
             var doctors = await context.Doctors
